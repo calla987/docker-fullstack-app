@@ -1,0 +1,10 @@
+/backend/node_modules/
+/frontend/node_modules/
+.idea/.gitignore
+.idea/docker-fullstack-app.iml
+.idea/intellij-javadocs-4.0.1.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+
+
