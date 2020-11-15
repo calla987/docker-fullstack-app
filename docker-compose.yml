@@ -8,6 +8,8 @@ services:
     volumes:
       - /usr/src/app/node_modules #exlude file
       - ./frontend:/usr/src/app  #이미지 재 build없이 수정된 소스를 바로 확인하기 위해
+    environment:
+      - CHOKIDAR_USEPOLLING=true #윈도우 터미널에서 reload가 안될때 필수!!!
     stdin_open: true  # 리액트 앱을 종료할때 나오는 버그를 잡아주는 옵션
   nginx:
     #restart : no (어떠한 상황에서도 재시작 안함)
