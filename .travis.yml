@@ -12,9 +12,9 @@ script:
   - docker run -e CI=true calla987/react-test-app npm test
 
 after_success:
-  - docker build -t calla987/docker-frontend ./frontend
-  - docker build -t calla987/docker-backend ./backend
-  - docker build -t calla987/docker-nginx ./nginx
+  - docker build -t calla987/docker-frontend:0.0.1 ./frontend
+  - docker build -t calla987/docker-backend:0.0.1 ./backend
+  - docker build -t calla987/docker-nginx:0.0.1 ./nginx
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
