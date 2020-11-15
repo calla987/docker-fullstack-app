@@ -31,6 +31,12 @@ services:
     volumes:
       - /app/node_modules  #exlude file (하나의 경로만 지정하면 exclude됨)
       - ./backend:/app
+    environment:
+      MYSQL_HOST : mysql
+      MYSQL_USER : root
+      MYSQL_ROOT_PASSWORD: mysqlmysql
+      MYSQL_DATABASE: myapp
+      MYSQL_PORT : 3306
   #mysql:
   #  build: ./mysql
   #  restart: unless-stopped
