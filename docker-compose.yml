@@ -6,14 +6,19 @@ services:
       context: ./frontend
     container_name: app_frontend
     volumes:
-      - /usr/src/app/node_modules
-      - ./frontend:/usr/src/app
-    stdin_open: true
+      - /usr/src/app/node_modules #exlude file
+      - ./frontend:/usr/src/app  #이미지 재 build없이 수정된 소스를 바로 확인하기 위해
+    stdin_open: true  # 리액트 앱을 종료할때 나오는 버그를 잡아주는 옵션
   nginx:
+    #restart : no (어떠한 상황에서도 재시작 안함)
+    #restart : always (항상 재시작)
+    #restart : on-failure (on-failure 에러코드와 함께 컨테이너가 멈출경우 restart)
+    #restart : unless-stopped (개발자가 임의로 멈추려고 할때 빼고는 항상 restart)
     restart: always
     build:
       dockerfile: Dockerfile
       context: ./nginx
+    container_name: nginx_app_proxy
     ports:
       - "3000:80"
   backend:
@@ -22,17 +27,17 @@ services:
       context: ./backend
     container_name: app_backend
     volumes:
-      - /app/node_modules
+      - /app/node_modules  #exlude file (하나의 경로만 지정하면 exclude됨)
       - ./backend:/app
-  mysql:
-     build: ./mysql
-     restart: unless-stopped
-     container_name: app_mysql
-     ports:
-       - "3306:3306"
-     volumes:
-       - ./mysql/mysql_data:/var/lib/mysql
-       - ./mysql/sqls/:/docker-entrypoint-initdb.d/
-     environment:
-       MYSQL_ROOT_PASSWORD: mysql
-       MYSQL_DATABASE: myapp
+  #mysql:
+  #  build: ./mysql
+  #  restart: unless-stopped
+  #  container_name: app_mysql
+  #  ports:
+  #    - "3306:3306"
+  #  volumes:
+  #    - ./mysql/mysql_data:/var/lib/mysql   #로컬 참조파일 file
+  #    - ./mysql/sqls/:/docker-entrypoint-initdb.d/  #로컬 참조파일 file
+  #  environment:
+  #    MYSQL_ROOT_PASSWORD: mysql
+  #    MYSQL_DATABASE: myapp
